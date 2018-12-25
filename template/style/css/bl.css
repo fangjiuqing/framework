@@ -1,0 +1,14 @@
+.navbar-static-side,
+.navbar-fixed-top,
+.navbar-static-top {
+    background: #366E7A !important;
+}
+
+.navbar-default .nav>li>a:focus,
+.navbar-default .nav>li>a:hover {
+    background-color: #305f69
+}
+
+#side-menu.nav>li.active {
+    background-color: #305f69;
+}

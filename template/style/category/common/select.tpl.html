@@ -1,0 +1,15 @@
+<!--{// 0 => 分类数组, 1 => 默认选择值, 2 => 字段名称, 3 => select ID, 4 => 提示请选择说明 }-->
+<select class="form-control" id="${3}" name="${2}">
+    <!--{if ${4}}--><option value="0">--请选择--</option><!--{/if}-->
+    <!--{foreach ${0} $k $v}-->
+    <option value="{$v['cat_id']}" {if $v['cat_id'] == ${1}} selected{/if} {if !empty($v['nodes'])} disabled="disabled" {/if}>
+       <!--{:str_repeat('&nbsp;', ($v['cat_level']) * 5)}-->└ {$v['cat_name']}
+    </option>
+    {if !empty($v['nodes'])}
+    <!--{foreach $v['nodes'] $sk $sv}-->
+        <option value="{$sv['cat_id']}" {if $sv['cat_id'] == ${1}} selected{/if} {if !empty($sv['nodes'])} disabled="disabled" {/if}>
+        <!--{:str_repeat('&nbsp;', ($sv['cat_level']) * 5)}-->{$sv['cat_name']}</option>
+    <!--{/foreach}-->
+    {/if}
+    <!--{/foreach}-->
+</select>

@@ -1,0 +1,25 @@
+<!--{include common/meta.inc}-->
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{$_pos['cur']}</h5>
+                        <a href="{url:'category-add-type-%d', $type_id}" class="btn btn-xs btn-success pull-right" id="add_rule_btn">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                    <div class="ibox-content">
+                        {$html}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--{include common/js.inc}-->
+    <script src="{__CTPL_URL__}js/filter.js"></script>
+</body>
+
+<!--{include common/footer.inc}-->

@@ -1,0 +1,83 @@
+<!--{include common/meta.tpl.html}-->
+</head>
+
+<body class="right-body">
+    <!--{include common/urhere.tpl.html}-->
+    <div class="section" style="width:80%; margin: 20px">
+        <div class="page-header">
+            <h4>&nbsp;&nbsp;{$cat['cat_name']} <small>{$cat['cat_route']}</small>
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary dropdown-toggle btn-xs" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        管理
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{url:'@cat-add-id-%d', $cat['cat_id']}">编辑类目</a></li>
+                        <li><a href="{url:'@spec-add-catid-%d', $cat['cat_id']}">新增规格</a></li>
+                        <li><a href="{url:'@cat-del-id-%d', $cat['cat_id']}">删除类目</a></li>
+                    </ul>
+                </div>
+            </h4>
+        </div>
+        <ul class="list-group">
+            <!--{foreach $spec $sk $sv}-->
+            <li class="list-group-item">
+                <div class="page-header">
+                    <h5>
+                        <i class="fa fa-tags" ></i> {$sv['spec_name']} 
+                        <small>( {if $sv['spec_type']} 输入{else}选择 {/if})</small>
+                        <div class="dropdown pull-right">
+                            <button class="btn btn-info dropdown-toggle btn-xs" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                管理
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="{url:'@spec-add-id-%d', $sv['spec_id']}">编辑信息</a></li>
+                                <li><a href="{url:'@spec-del-id-%d', $sv['spec_id']}">删除记录</a></li>
+                            </ul>
+                        </div>
+                    </h5>
+                </div>
+                <div class="container" style="width:50%;background:none">
+                    <!--{if !empty($sv['items'])}-->
+                    <!--{foreach $sv['items'] $ik $iv}-->
+                    <div class="row" id="item-{$iv['item_id']}">
+                        <div class="col-lg-6" style="padding-top:5px;padding-bottom:5px">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="input-{$iv['item_id']}" value="{$iv['item_label']}" placeholder="">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-warning btn-ajaxgetsave" data-url="{url:'@item-save-id-%d-spec-%d-v-~', $iv['item_id'], $iv['item_spec_id']}" data-target="#input-{$iv['item_id']}">保存</button>
+                                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="javascript:;" class="btn-ajaxdel" data-url="{url:'@item-del-id-%d', $iv['item_id']}" data-target="#item-{$iv['item_id']}">删除</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--{/foreach}-->
+                    <!--{/if}-->
+                    <div class="row">
+                        <div class="col-lg-6" style="padding-top:5px;padding-bottom:5px">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="input-addnew-{$sv['spec_id']}" value="" placeholder="">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-warning btn-ajaxgetsave" data-url="{url:'@item-save-id-%d-spec-%d-v-~', 0, $sv['spec_id']}" data-target="#input-addnew-{$sv['spec_id']}">新增</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--{/foreach}-->
+        </ul>
+    </div>
+    <!--{include common/js.tpl.html}-->
+    <script>
+    </script>
+</body>
+
+</html>

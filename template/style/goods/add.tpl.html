@@ -1,0 +1,230 @@
+<!--{include common/meta.inc}-->
+<style type="text/css">
+    #specs .input-group {
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <form action="{url:'@%s-save' , $_MODULE}" method="post" id="sform" class="form-horizontal">
+            <input type="hidden" name="data[goods_id]" value="{$data['goods_id'] ?: 0}">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!--商品基本信息开始-->
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>
+                                <i class="fa fa-cogs"></i>
+                                基本信息
+                            </h5>
+                            <a class="btn btn-success pull-right" id="submit-form" type="submit">保存内容</a>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row row-dashed">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">分类名称</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="goods_name" name="data[goods_name]" value="{$data['goods_name']}" placeholder="请输入分类名称" maxlength="64">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">商品分类</label>
+                                        <div class="col-sm-10">
+                                            <!--{include category/select_tree.tpl.html #$cat_tree, $data[goods_cat_id], data[goods_cat_id], cat_parent, false}-->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">规格属性</label>
+                                        <div class="col-sm-10">
+                                            <div id="specs">
+                                                {if $data['goods_specs']}
+                                                {foreach $data['goods_specs'] $k $v}
+                                                <div class="input-group">
+                                                   <span class="input-group-addon">{$v['goods_spec_key']}</span>
+                                                   <input type="text" class="form-control" name="specs[{$v['goods_spec_key']}]" value="{$v['goods_spec_val']}">
+                                                </div>
+                                                {/foreach}
+                                                {else}
+                                                <input type="text" class="form-control" disabled placeholder="请先选择分类" />
+                                                {/if}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">库存数量</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" id="goods_storage" name="data[goods_storage]" value="{$data['goods_storage']}" placeholder="请输入分类名称" maxlength="64">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">阶梯定价</label>
+                                        <div class="col-sm-10 nums-prices" style="position: relative;">
+                                            {if $data['goods_price']}
+                                                {foreach $data['goods_price'] $k $v}
+                                                <div class="input-group per90 mb10">
+                                                    <input type="number" class="form-control" placeholder="起始数量" name="start[]" value="{$v['goods_start']}" />
+                                                    <span class="input-group-addon"> ~ </span>
+                                                    <input type="number" class="form-control" placeholder="截止数量" name="end[]" value="{$v['goods_end']}" />
+                                                    <span class="input-group-addon"> 价格 </span>
+                                                    <input type="number" class="form-control" placeholder="元/件" name="price[]" value="{$v['goods_price']}" />
+                                                </div>
+                                                {/foreach}
+                                            {else}
+                                                <div class="input-group per90 mb10">
+                                                    <input type="number" class="form-control" placeholder="起始数量" name="start[]" />
+                                                    <span class="input-group-addon"> ~ </span>
+                                                    <input type="number" class="form-control" placeholder="截止数量" name="end[]" />
+                                                    <span class="input-group-addon"> 价格 </span>
+                                                    <input type="number" class="form-control" placeholder="元/件" name="price[]" />
+                                                </div>
+                                            {/if}
+
+
+
+
+                                            <a class="btn btn-xs btn-link pull-right add-price" style="position: absolute;right: 14px; top: 5px">增加</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-4" style="text-align: center;">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input type="hidden" name="data[goods_cover]" value="{$data['goods_cover']}" />
+                                            <img src="{if $data['goods_cover']}{__UPLOAD_URL__}{$data['goods_cover']}{else}{__STATIC_URL__}images/no-pic.png{/if}" class="add-cover">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!--商品基本信息结束-->
+
+                    <!--商品详情开始-->
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>
+                                <i class="fa fa-cogs"></i>
+                                商品详情
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row row-dashed">
+                                <div class="col-sm-12">
+                                    <!-- 加载编辑器的容器 -->
+                                    <script id="editor" name="content" type="text/plain">
+                                        {$data['goods_detail']}
+                                    </script>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!--商品详情结束-->
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--{include common/js.inc}-->
+    <!--{include common/ueditor.tpl.html}-->
+    <script>
+        var allow_min = 1,
+            allow_max = 99,
+            goods_id  = parseInt("{$data['goods_id'] ? : 0}");
+
+        $(function() {
+            /**
+             * [选择分类拉取规格]
+             * @param  {[type]} ){                             var val [description]
+             * @return {[type]}     [description]
+             */
+            $('#cat_parent').on('change' , function(){
+                var val = $(this).find('option:selected').val();
+                spe_url = "{url:'goods-specs-gid-#gid#-cid-~'}" + val;
+                spe_url = spe_url.replace('#gid#' , goods_id);
+                RGX.get_json(spe_url , function(d) {
+                    var specs_html = '';
+                    if ( d.code == 0 ) {
+                        $.each(d.data , function(k , v){
+                            specs_html += '<div class="input-group">';
+                            specs_html +=     '<span class="input-group-addon">'+ k +'</span>';
+                            specs_html +=     '<input type="text" class="form-control" name="specs['+k+']" placeholder="请输入'+k+'信息" value="'+v+'">';
+                            specs_html += '</div>';
+                        });
+                    }else{
+                        specs_html = '<input type="text" class="form-control" disabled placeholder="请先选择分类" />';
+                    }
+                    $('#specs').empty().html(specs_html);
+                });
+            });
+
+            /**
+             * [最小起订量处理]
+             * @param  {[type]} )
+             * @return {[type]}
+             */
+            $('.nums-prices').find('input[name="start[]"]').on('blur' , function() {
+                var this_min = parseInt( $(this).val() );
+                console.log(this_min);
+                // if ( this_min < allow_min ) {
+                //     RGX.msg('最小起订量为'  + allow_min);
+                //     $(this).val(allow_min).focus();
+                // }
+            });
+
+            /**
+             * [最小起订量处理]
+             * @param  {[type]} )
+             * @return {[type]}
+             */
+            $('.nums-prices').find('input[name="end[]"]').on('blur' , function() {
+                var this_max = parseInt( $(this).val() );
+                console.log(this_max);
+                // allow_min = this_max + 1;
+            });
+
+            /**
+             * [增加新的价格]
+             * @param  {[type]} )
+             * @return {[type]}   [description]
+             */
+            $('.add-price').on('click' , function() {
+                var add_html  = '<div class="input-group per90 mb10">';
+                    add_html +=    '<input type="number" class="form-control" placeholder="起始数量" name="start[]" />';
+                    add_html +=    '<span class="input-group-addon"> ~ </span>';
+                    add_html +=    '<input type="number" class="form-control" placeholder="截止数量" name="end[]" />';
+                    add_html +=    '<span class="input-group-addon"> 价格 </span>';
+                    add_html +=    '<input type="number" class="form-control" placeholder="元/件" name="price[]" />';
+                    add_html += '</div>';
+
+                $('.nums-prices').append(add_html);
+            });
+
+            /**
+             * 表单提交
+             */
+            $('#submit-form').on('click' , function() {
+                var request  = new Object();
+                request.data = $('#sform').serialize() + '&content=' + ue.getContent();
+                request.url  = $('#sform').attr('action');
+                request.succ = function(d) {
+                    if ( d.code == 0 ) {
+                        RGX.succ('操作成功！');
+                    }
+                }
+                RGX.ajaxpost(request);
+            });
+        });
+    </script>
+</body>
+
+<!--{include common/footer.inc}-->

@@ -1,0 +1,216 @@
+<!-- 基本信息开始 -->
+<table class="table table-bordered">
+    <tr>
+        <td align="right" width="150px" class="title">活动名称</td>
+        <td width="50%">
+            {$data['act_title']}
+        </td>
+        <td align="right" width="150px" class="title">副标题</td>
+        <td>
+            {$data['act_subtitle']}
+        </td>
+    </tr>
+
+    <tr>
+        <td align="right" class="title">开始时间</td>
+        <td>
+            {$data['act_sdate']|date,Y年 m月d日 H:i}
+        </td>
+        <td align="right" class="title">结束时间</td>
+        <td>
+            {$data['act_edate']|date,Y年 m月d日 H:i}
+        </td>
+    </tr>
+
+    <tr>
+        <td align="right" class="title">报名时间</td>
+        <td>
+            {$data['act_dsdate']|date,Y年 m月d日 H:i}
+        </td>
+        <td align="right" class="title">报名截止</td>
+        <td>
+            {$data['act_dedate']|date,Y年 m月d日 H:i}
+        </td>
+    </tr>
+
+    <tr>
+        <td align="right" class="title">活动地点</td>
+        <td>
+            {$data['act_region']} {$data['act_addr']}
+        </td>
+        <td align="right" class="title">当前状态</td>
+        <td>
+            <span class="label label-info">审核通过</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td align="right" class="title">拟邀人数</td>
+        <td>
+            {$data['act_total_num']}
+        </td>
+        <td align="right" class="title">报名费用</td>
+        <td>
+            {$data['act_fee']}
+        </td>
+    </tr>
+
+    <tr>
+        <td align="right" class="title">预算</td>
+        <td>
+            {$data['act_budget']}
+        </td>
+        <td align="right" class="title">付款单位</td>
+        <td>{$data['act_payer']}</td>
+    </tr>
+
+    <tr>
+        <td align="right" class="title">活动标签</td>
+        <td>{foreach $data['act_tags'] $k $v}
+            <span class="label active">{$v}</span>
+            {/foreach}
+        </td>
+        <td align="right" class="title">最后更新</td>
+        <td>
+            {$data['act_lastupdate']|date,Y年 m月d日 H:i}
+        </td>
+    </tr>
+
+    <tr>
+        <td align="right" class="title">活动概述</td>
+        <td style="text-indent: 25px;">
+            {if $data['act_summary']}
+            {$data['act_summary']}
+            {else}
+            无
+            {/if}
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<!-- 基本信息结束 -->
+
+<!-- 活动详情开始 -->
+<table class="table table-bordered mb20 customize">
+    <tr>
+        <th class="title">活动详情</th>
+    </tr>
+
+    <tr>
+        <td>{$data['act_desc']|html}</td>
+    </tr>
+</table>
+<!-- 活动详情结束 -->
+
+<!-- 主办单位开始 -->
+<!--{if $data['act_host_org']}-->
+<table class="table table-bordered">
+    <tr>
+        <th>主办单位</th>
+    </tr>
+</table>
+<table class="table table-bordered mb20">
+    <tr>
+        <th width="60%">单位名称</th>
+        <th width="25%">级别</th>
+        <th align="center" width="15%">操作</th>
+    </tr>
+
+    {foreach $data['act_host_org'] $k $v}
+    <tr>
+        <td>{$v['rlt_org_name']}</td>
+        <td>{$v['rlt_org_type']}</td>
+        <td align="center">
+            <input type="hidden" name="orelation[]">
+            <a href="#"><i class="fa fa-trash-o"></i></a>
+        </td>
+    </tr>
+    {/foreach}
+</table>
+<!--{/if}-->
+<!-- 主办单位结束 -->
+
+<!-- 承办单位开始 -->
+<!--{if $data['act_relay_org']}-->
+<table class="table table-bordered">
+    <tr>
+        <th>承办单位</th>
+    </tr>
+</table>
+<table class="table table-bordered mb20">
+    <tr>
+        <th width="60%">单位名称</th>
+        <th width="25%">级别</th>
+        <th align="center" width="15%">操作</th>
+    </tr>
+
+    {foreach $data['act_relay_org'] $k $v}
+    <tr>
+        <td>{$v['rlt_org_name']}</td>
+        <td>{$v['rlt_org_type']}</td>
+        <td align="center">
+            <input type="hidden" name="orelation[]">
+            <a href="#"><i class="fa fa-trash-o"></i></a>
+        </td>
+    </tr>
+    {/foreach}
+</table>
+<!--{/if}-->
+<!-- 承办单位结束 -->
+
+<!-- 协办单位开始 -->
+<!--{if $data['act_assio_org']}-->
+<table class="table table-bordered">
+    <tr>
+        <th>协办单位</th>
+    </tr>
+</table>
+<table class="table table-bordered mb20">
+    <tr>
+        <th width="60%">单位名称</th>
+        <th width="25%">级别</th>
+        <th align="center" width="15%">操作</th>
+    </tr>
+
+    {foreach $data['act_assio_org'] $k $v}
+    <tr>
+        <td>{$v['rlt_org_name']}</td>
+        <td>{$v['rlt_org_type']}</td>
+        <td align="center">
+            <input type="hidden" name="orelation[]">
+            <a href="#"><i class="fa fa-trash-o"></i></a>
+        </td>
+    </tr>
+    {/foreach}
+</table>
+<!--{/if}-->
+<!-- 协办单位结束 -->
+
+<!-- 赞助单位开始 -->
+<!--{if $data['act_donate_org']}-->
+<table class="table table-bordered">
+    <tr>
+        <th>赞助单位</th>
+    </tr>
+</table>
+<table class="table table-bordered mb20">
+    <tr>
+        <th width="60%">单位名称</th>
+        <th width="25%">级别</th>
+        <th align="center" width="15%">操作</th>
+    </tr>
+
+    {foreach $data['act_donate_org'] $k $v}
+    <tr>
+        <td>{$v['rlt_org_name']}</td>
+        <td>{$v['rlt_org_type']}</td>
+        <td align="center">
+            <input type="hidden" name="orelation[]">
+            <a href="#"><i class="fa fa-trash-o"></i></a>
+        </td>
+    </tr>
+    {/foreach}
+</table>
+<!--{/if}-->
+<!-- 赞助单位结束 -->

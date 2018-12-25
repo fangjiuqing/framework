@@ -1,0 +1,9 @@
+<!--{// 0 => 分类数组, 1 => 默认选择值, 2 => 字段名称, 3 => select ID, 4 => 是否是添加 }-->
+<select class="form-control" id="${3}" name="${2}">
+    <!--{if ${4}}--><option value="0">├ 作为一级类目</option><!--{/if}-->
+    <!--{foreach ${0} $k $v}-->
+    <option value="{$v['cat_id']}" {if $v['cat_id'] == ${1}} selected{/if}>
+       <!--{:str_repeat('&nbsp;', ($v['cat_level']) * 5)}-->└ {$v['cat_name']}
+    </option>
+    <!--{/foreach}-->
+</select>
